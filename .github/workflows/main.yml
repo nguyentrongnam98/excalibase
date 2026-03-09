@@ -16,7 +16,7 @@ jobs:
         password: ${{ secrets.PASSWORD }}
         port: 22
         script: |
-          cd /service/excalibase
+          cd /root/service/excalibase
           git fetch origin
           git checkout production
           git pull
