@@ -1,0 +1,3 @@
+export { INITIAL_TODOS_CODE, INITIAL_SCHEMA_CODE } from "./defaultCode";
+export { INITIAL_TODOS, INITIAL_FILES, EDITABLE_RANGES } from "./initialData";
+export { CATEGORIES, CATEGORY_COLORS, MONACO_EDITOR_OPTIONS } from "./editor";
