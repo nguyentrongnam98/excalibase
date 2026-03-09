@@ -1,0 +1,28 @@
+name: Next Deployment
+
+on:
+  push:
+    branches: [production]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Deploy using ssh
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        port: 22
+        script: |
+          cd /service/excalibase
+          git fetch origin
+          git checkout production
+          git pull
+          docker build -t excalibase .
+          docker stop excalibase || true
+          docker rm excalibase || true
+          docker run -d -p 3000:3000 --name excalibase excalibase
+            
+          
