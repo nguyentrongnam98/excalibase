@@ -55,13 +55,13 @@ export default function InteractiveDemo() {
 
 
   return (
-    <div className="w-full max-w-7xl mx-auto p-4 md:p-6 lg:p-8">
+    <div className="w-full max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 md:py-6 lg:py-8">
       {/* Header */}
-      <div className="text-center mb-8">
-        <h2 className="text-3xl md:text-4xl font-bold text-white mb-3">
+      <div className="text-center mb-6 sm:mb-8">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-2 sm:mb-3">
           Everything is code Sam
         </h2>
-        <p className="text-[#888] max-w-xl mx-auto text-sm md:text-base">
+        <p className="text-[#888] max-w-xl mx-auto text-xs sm:text-sm md:text-base px-2">
           Edit the code on the left and watch the app update in real-time. Try
           fixing the bug in{" "}
           <code className="text-orange-400">setComplete</code> — change{" "}
@@ -71,16 +71,16 @@ export default function InteractiveDemo() {
       </div>
 
       {/* Try it out badge */}
-      <div className="flex justify-center mb-4">
-        <div className="bg-white text-black text-sm font-semibold px-4 py-1.5 rounded-full shadow-lg">
+      <div className="flex justify-center mb-3 sm:mb-4">
+        <div className="bg-white text-black text-xs sm:text-sm font-semibold px-3 sm:px-4 py-1 sm:py-1.5 rounded-full shadow-lg">
           ✨ Try it out!
         </div>
       </div>
 
       {/* Main layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 h-[700px]">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:h-[700px]">
         {/* Left: Code Editor */}
-        <div className="h-full min-h-[350px]">
+        <div className="h-[400px] sm:h-[450px] md:h-[500px] lg:h-full">
           <CodeEditor
             files={files}
             activeFile={activeFile}
@@ -94,8 +94,8 @@ export default function InteractiveDemo() {
         </div>
 
         {/* Right: App Preview + Database View */}
-        <div className="flex flex-col gap-4 h-full">
-          <div className="flex-1 min-h-0">
+        <div className="flex flex-col gap-4 h-auto lg:h-full">
+          <div className="h-[350px] sm:h-[400px] lg:flex-1 lg:h-auto lg:min-h-0">
             <AppPreview
               todos={todos}
               onToggleTodo={toggleTodo}
@@ -104,7 +104,7 @@ export default function InteractiveDemo() {
               notification={notification}
             />
           </div>
-          <div className="flex-1 min-h-0">
+          <div className="h-[280px] sm:h-[320px] lg:flex-1 lg:h-auto lg:min-h-0">
             <DatabaseView todos={todos} />
           </div>
         </div>

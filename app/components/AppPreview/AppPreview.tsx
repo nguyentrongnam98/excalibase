@@ -17,18 +17,18 @@ export default function AppPreview({
       <WindowChrome title="my-amazing-project.app" />
 
       {/* Header info */}
-      <div className="px-4 pb-2 flex items-center justify-between">
-        <span className="text-xs text-[#888]">Last categorized: 0s ago</span>
+      <div className="px-3 sm:px-4 pb-2 flex items-center justify-between gap-2">
+        <span className="text-[10px] sm:text-xs text-[#888] shrink-0">Last categorized: 0s ago</span>
         {notification && (
-          <span className="bg-[#2a2a3e] text-[#f0a050] text-xs px-3 py-1 rounded-full flex items-center gap-2">
-            {notification}
-            <span className="text-[#888] cursor-pointer">×</span>
+          <span className="bg-[#2a2a3e] text-[#f0a050] text-[10px] sm:text-xs px-2 sm:px-3 py-1 rounded-full flex items-center gap-1.5 sm:gap-2 truncate max-w-[200px] sm:max-w-none">
+            <span className="truncate">{notification}</span>
+            <span className="text-[#888] cursor-pointer shrink-0">×</span>
           </span>
         )}
       </div>
 
       {/* Todo list */}
-      <div className="flex-1 px-4 overflow-y-auto space-y-1">
+      <div className="flex-1 px-3 sm:px-4 overflow-y-auto space-y-1">
         {todos.map((todo) => (
           <TodoItem key={todo._id} todo={todo} onToggle={onToggleTodo} />
         ))}
@@ -38,7 +38,7 @@ export default function AppPreview({
 
       {/* Last action */}
       {lastAction && (
-        <div className="px-4 pb-2 text-xs text-[#666] font-mono truncate">
+        <div className="px-3 sm:px-4 pb-2 text-[10px] sm:text-xs text-[#666] font-mono truncate">
           {lastAction}
         </div>
       )}
