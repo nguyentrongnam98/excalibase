@@ -1,6 +1,7 @@
 /**
  * Footer - Multi-column layout with logo, nav links, social, and compliance badges
  */
+import Link from "next/link";
 
 const ExternalIcon = () => (
   <svg
@@ -159,14 +160,14 @@ export default function Footer() {
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-8 lg:gap-6">
           {/* Logo */}
           <div className="col-span-2 sm:col-span-3 lg:col-span-1 mb-6 lg:mb-0">
-            <a href="/" className="flex items-center gap-2">
+            <Link href="/" className="flex items-center gap-2">
               <div className="w-7 h-7 bg-gradient-to-br from-orange-400 to-orange-600 rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-xs">E</span>
               </div>
               <span className="text-white font-bold text-lg tracking-tight">
                 excalibase
               </span>
-            </a>
+            </Link>
           </div>
 
           {/* Nav columns */}
@@ -245,9 +246,7 @@ export default function Footer() {
       {/* Bottom bar */}
       <div className="border-t border-white/[0.06]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <p className="text-white/40 text-sm">
-            ©2026 Excalibase, Inc.
-          </p>
+          <p className="text-white/40 text-sm">©2026 Excalibase, Inc.</p>
         </div>
       </div>
     </footer>
