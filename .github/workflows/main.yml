@@ -3,26 +3,71 @@ name: Next Deployment
 on:
   push:
     branches: [production]
+  pull_request:
+    branches: [production]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  deploy:
+  quality:
     runs-on: ubuntu-latest
     steps:
-    - name: Deploy using ssh
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        password: ${{ secrets.PASSWORD }}
-        port: 22
-        script: |
-          cd /root/service/excalibase
-          git fetch origin
-          git checkout production
-          git pull
-          docker build -t excalibase .
-          docker stop excalibase || true
-          docker rm excalibase || true
-          docker run -d -p 3000:3000 --name excalibase excalibase
-            
-          
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: ESLint
+        run: pnpm lint
+
+      - name: Type Check
+        run: pnpm tsc --noEmit
+
+      - name: Prettier
+        run: pnpm prettier --check "src/**/*.{ts,tsx,js,jsx}" || true
+
+  sonar:
+    runs-on: ubuntu-latest
+    needs: quality
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [quality, sonar]
+    if: github.event_name == 'push'
+    steps:
+      - name: Deploy using ssh
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: 22
+          script: |
+            cd /root/service/excalibase
+            git fetch origin
+            git checkout production
+            git pull
+            docker build -t excalibase .
+            docker stop excalibase || true
+            docker rm excalibase || true
+            docker run -d -p 3000:3000 --name excalibase excalibase
